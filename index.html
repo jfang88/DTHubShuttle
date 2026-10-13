@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DTHub Shuttle</title>
+<meta name="description" content="Next shuttle bus between Data Technology Hub, Tiu Keng Leng and Lam Tin.">
+<meta name="theme-color" content="#0b4f9c">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;800&family=Overpass+Mono:wght@500;700&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<!--APP-->
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <span class="mark" aria-hidden="true">DTH</span>
+      <div>
+        <h1>DTHub Shuttle</h1>
+        <p class="zh" lang="zh-HK">數據技術中心員工穿梭巴士</p>
+      </div>
+    </div>
+    <div class="clock">
+      <span id="clock" class="clock-time">--:--</span>
+      <span id="daychip" class="daychip">Loading</span>
+    </div>
+  </header>
+
+  <main class="grid">
+    <section class="col-main">
+      <form class="controls" id="controls" autocomplete="off">
+        <div class="route">
+          <div class="field">
+            <label for="from">From</label>
+            <select id="from"></select>
+          </div>
+          <button type="button" id="swap" class="swap" aria-label="Swap from and to" title="Swap">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M7 4v13m0 0-3.5-3.5M7 17l3.5-3.5M17 20V7m0 0-3.5 3.5M17 7l3.5 3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="field">
+            <label for="to">To</label>
+            <select id="to"></select>
+          </div>
+        </div>
+        <div class="when">
+          <div class="seg" role="group" aria-label="Departure time">
+            <button type="button" id="nowBtn" class="seg-btn" aria-pressed="true">Now</button>
+            <button type="button" id="laterBtn" class="seg-btn" aria-pressed="false">Pick a time</button>
+          </div>
+          <div class="when-inputs" id="whenInputs" hidden>
+            <label class="sr" for="date">Date</label>
+            <input type="date" id="date">
+            <label class="sr" for="time">Time</label>
+            <input type="time" id="time" step="300">
+          </div>
+          <span class="fare-chip">Fare HK$5</span>
+        </div>
+      </form>
+
+      <section class="hero" id="hero" aria-live="polite"></section>
+
+      <section class="dests" id="destsWrap">
+        <h2 class="label" id="destsTitle">Next departure to each stop</h2>
+        <div class="dest-grid" id="dests"></div>
+      </section>
+    </section>
+
+    <section class="col-list">
+      <div class="list-head">
+        <h2 class="label" id="listTitle">Departures</h2>
+        <button type="button" id="earlier" class="linkbtn" hidden>Show earlier</button>
+      </div>
+      <ol class="board" id="board"></ol>
+    </section>
+  </main>
+
+  <section class="info">
+    <details>
+      <summary>Where to wait</summary>
+      <dl class="stops" id="stopInfo"></dl>
+    </details>
+    <details>
+      <summary>Fares and service days</summary>
+      <div class="prose">
+        <ul>
+          <li>Fare is <strong>HK$5 per person</strong>, every route.</li>
+          <li>Tiu Keng Leng route: Monday to Friday, plus three runs each way on Saturday.</li>
+          <li>Lam Tin route: Monday to Friday only.</li>
+          <li>No service on Sundays or public holidays.</li>
+          <li>Actual departure times can vary with traffic.</li>
+        </ul>
+      </div>
+    </details>
+    <details>
+      <summary>Questions about the service</summary>
+      <div class="prose">
+        <p>DTH Facilities Management Office customer services hotline <strong class="sel">2148 1228</strong>, or email <span class="sel">dth@innoparkhk.org</span>.</p>
+      </div>
+    </details>
+  </section>
+
+  <footer class="foot">
+    <p>Timetable from circular DTH/CIR/2024/01/044, effective 1 June 2024. Route information is for reference only and subject to traffic conditions.</p>
+    <p>Times are Hong Kong time. No service on Sundays or public holidays. Holiday calendar loaded to <span id="holUntil"></span>.</p>
+  </footer>
+</div>
+<!--/APP-->
+<script src="data.js"></script>
+<script src="schedule.js"></script>
+<script src="app.js"></script>
+<script>
+  if ('serviceWorker' in navigator && location.protocol === 'https:') {
+    try { navigator.serviceWorker.register('sw.js').catch(function () {}); } catch (e) {}
+  }
+</script>
+</body>
+</html>

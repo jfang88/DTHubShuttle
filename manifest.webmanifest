@@ -1,0 +1,11 @@
+{
+  "name": "DTHub Shuttle",
+  "short_name": "DTHub Shuttle",
+  "description": "Next shuttle bus between Data Technology Hub, Tiu Keng Leng and Lam Tin.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#eef1f5",
+  "theme_color": "#0b4f9c",
+  "icons": [{ "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }]
+}
